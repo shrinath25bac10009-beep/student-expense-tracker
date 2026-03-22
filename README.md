@@ -101,4 +101,25 @@ You can modify these values inside app.py.
 
 ---
 
+HERE ARE SOME PICTURES OF THE CODES GUI:-
+<img width="1920" height="1080" alt="Screenshot (12)" src="https://github.com/user-attachments/assets/37deeb01-fd9a-4ded-bddd-eca132c16a0a" />
+<img width="1920" height="1080" alt="Screenshot (13)" src="https://github.com/user-attachments/assets/8ab66f75-b0ff-40a4-b343-1d4610df40c8" />
+<img width="1920" height="1080" alt="Screenshot (14)" src="https://github.com/user-attachments/assets/1de5140e-31ae-498f-9882-2a4c4f7893c8" />
+<img width="1920" height="1080" alt="Screenshot (15)" src="https://github.com/user-attachments/assets/383922e7-0d73-4734-a3bf-0a71a56ace26" />
+<img width="1920" height="1080" alt="Screenshot (16)" src="https://github.com/user-attachments/assets/dd76d15b-614e-4cd6-8dc1-715d8c8c1f6e" />
+<img width="1920" height="1080" alt="Screenshot (17)" src="https://github.com/user-attachments/assets/0f79e714-21a5-46c2-b177-11e5d5d1ec07" />
+<img width="1920" height="1080" alt="Screenshot (18)" src="https://github.com/user-attachments/assets/dd68f4ce-ea4e-49c3-88e2-e32760d6a6ce" />
+<img width="1920" height="1080" alt="Screenshot (19)" src="https://github.com/user-attachments/assets/95aa19ec-0812-436d-a703-c5b432060f91" />
+
+
+
+
+
+
+
+
+
+
+
+
 
