@@ -102,14 +102,15 @@ You can modify these values inside app.py.
 ---
 
 HERE ARE SOME PICTURES OF THE CODES GUI:-
-<img width="1920" height="1080" alt="Screenshot (12)" src="https://github.com/user-attachments/assets/37deeb01-fd9a-4ded-bddd-eca132c16a0a" />
-<img width="1920" height="1080" alt="Screenshot (13)" src="https://github.com/user-attachments/assets/8ab66f75-b0ff-40a4-b343-1d4610df40c8" />
-<img width="1920" height="1080" alt="Screenshot (14)" src="https://github.com/user-attachments/assets/1de5140e-31ae-498f-9882-2a4c4f7893c8" />
-<img width="1920" height="1080" alt="Screenshot (15)" src="https://github.com/user-attachments/assets/383922e7-0d73-4734-a3bf-0a71a56ace26" />
-<img width="1920" height="1080" alt="Screenshot (16)" src="https://github.com/user-attachments/assets/dd76d15b-614e-4cd6-8dc1-715d8c8c1f6e" />
-<img width="1920" height="1080" alt="Screenshot (17)" src="https://github.com/user-attachments/assets/0f79e714-21a5-46c2-b177-11e5d5d1ec07" />
-<img width="1920" height="1080" alt="Screenshot (18)" src="https://github.com/user-attachments/assets/dd68f4ce-ea4e-49c3-88e2-e32760d6a6ce" />
-<img width="1920" height="1080" alt="Screenshot (19)" src="https://github.com/user-attachments/assets/95aa19ec-0812-436d-a703-c5b432060f91" />
+<img width="1920" height="1080" alt="Screenshot (12)" src="https://github.com/user-attachments/assets/56e46c5f-d172-4c52-9e4d-1ee46227f92b" />
+<img width="1920" height="1080" alt="Screenshot (13)" src="https://github.com/user-attachments/assets/4fcd7cb5-7529-4ad8-8770-3197f4eea496" />
+<img width="1920" height="1080" alt="Screenshot (14)" src="https://github.com/user-attachments/assets/9540fcb1-088b-4236-a456-2668d8369455" />
+<img width="1920" height="1080" alt="Screenshot (15)" src="https://github.com/user-attachments/assets/a304e94a-ac04-45f8-8607-346baa9149d6" />
+<img width="1920" height="1080" alt="Screenshot (16)" src="https://github.com/user-attachments/assets/22d7630f-0b10-408d-9ea4-b7b0a2e154ba" />
+<img width="1920" height="1080" alt="Screenshot (17)" src="https://github.com/user-attachments/assets/6845a61b-a0e3-4935-b2f4-f5fee4bb25b9" />
+<img width="1920" height="1080" alt="Screenshot (18)" src="https://github.com/user-attachments/assets/dd33b3a0-e5b1-4883-9e48-6e7aa88f5cb8" />
+<img width="1920" height="1080" alt="Screenshot (19)" src="https://github.com/user-attachments/assets/fbe4aad3-ec17-4c86-b89d-717427b7d08a" />
+
 
 
 
