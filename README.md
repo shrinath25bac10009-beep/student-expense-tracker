@@ -1,115 +1,159 @@
-# 💰 Smart Expense Tracker
+!pip install gradio pandas matplotlib
+import gradio as gr
+import pandas as pd
+import matplotlib.pyplot as plt
+import os
 
-An interactive expense tracking web app built using Python and Gradio.  
-This application helps users record daily expenses, monitor spending habits, and stay within a defined budget through visual insights and smart suggestions.
+# ---------------- DATA STORAGE ---------------- #
+FILE = "expenses.csv"
 
----
+if os.path.exists(FILE):
+    expenses = pd.read_csv(FILE)
+else:
+    expenses = pd.DataFrame(columns=["Date","Category","Description","Amount"])
 
-## 🚀 Features
+categories = ["Food","Transport","Books","Entertainment","Other"]
+BUDGET_LIMIT = 200
+WARNING_THRESHOLD = 0.8
 
-- ➕ Add and store daily expenses  
-- 📂 Categorize spending (Food, Transport, Books, etc.)  
-- 💰 Budget limit with warning alerts  
-- 📊 Category-wise expense breakdown  
-- 📈 Pie chart visualization of spending  
-- 💡 Smart suggestions for remaining budget  
-- 💾 Automatic data saving using CSV  
 
----
+# ---------------- FUNCTIONS ---------------- #
 
-## 🛠️ Tech Stack
+def add_expense(date, cat, desc, amt):
+    global expenses
 
-- Python  
-- Gradio  
-- Pandas  
-- Matplotlib  
+    if not date or not desc:
+        return "❌ Please fill all fields", expenses
 
----
+    try:
+        amt = float(amt)
+    except:
+        return "❌ Invalid amount", expenses
 
-## 📦 Installation
+    total_now = expenses["Amount"].sum() + amt
 
-1. Clone the repository:
+    if total_now > BUDGET_LIMIT:
+        return "❌ Budget exceeded!", expenses
 
-git clone https://github.com/your-username/smart-expense-tracker.git  
-cd smart-expense-tracker  
+    new_row = pd.DataFrame([{
+        "Date": str(date),
+        "Category": cat,
+        "Description": desc,
+        "Amount": amt
+    }])
 
-2. Install dependencies:
+    expenses = pd.concat([expenses, new_row], ignore_index=True)
 
-pip install -r requirements.txt  
+    # SAVE TO CSV
+    expenses.to_csv(FILE, index=False)
 
----
+    msg = "✅ Expense added!"
 
-## ▶️ Running the App
+    if expenses["Amount"].sum() >= BUDGET_LIMIT * WARNING_THRESHOLD:
+        msg += "\n⚠️ Warning: Budget almost reached!"
 
-python app.py  
+    return msg, expenses
 
-After running, the app will open in your browser.
 
----
+def show_total():
+    total = expenses["Amount"].sum()
+    return f"💰 Total spent: ${total:.2f} / {BUDGET_LIMIT}"
 
-## 📊 How to Use
 
-1. Enter:
-   - Date  
-   - Category  
-   - Description  
-   - Amount  
+def show_category():
+    if expenses.empty:
+        return "No data"
 
-2. Click "Add Expense"  
-3. View:
-   - Total spending  
-   - Category breakdown  
-   - Spending chart  
-   - Budget suggestions  
+    summary = expenses.groupby("Category")["Amount"].sum()
+    return "\n".join([f"{c}: ${a:.2f}" for c,a in summary.items()])
 
----
 
-## 📁 Project Structure
+def plot_chart():
+    if expenses.empty:
+        return None
 
-smart-expense-tracker/  
-│── app.py  
-│── expenses.csv  
-│── requirements.txt  
-│── README.md  
+    summary = expenses.groupby("Category")["Amount"].sum()
 
----
+    fig, ax = plt.subplots()
+    ax.pie(summary, labels=summary.index, autopct="%1.1f%%")
+    ax.set_title("Spending Distribution")
 
-## ⚙️ Configuration
+    return fig
 
-- Default budget limit: $200  
-- Warning threshold: 80% of budget  
 
-You can modify these values inside app.py.
+def suggestions():
+    rem = BUDGET_LIMIT - expenses["Amount"].sum()
+    per_cat = rem / len(categories) if len(categories) > 0 else 0
 
----
+    text = f"Remaining: ${rem:.2f}\n\n"
+    for c in categories:
+        text += f"{c}: ~${per_cat:.2f}\n"
 
-## 🔮 Future Improvements
+    return text
 
-- Edit/Delete expenses  
-- Monthly budget tracking  
-- Cloud database integration  
-- Mobile-friendly UI  
-- User authentication system  
 
----
+# ---------------- UI ---------------- #
 
-## ⚠️ Limitations
+with gr.Blocks() as app:
 
-- Data is stored locally (CSV file)  
-- No multi-user support  
-- Fixed budget (not dynamic yet)  
+    gr.Markdown("## 💰 Smart Expense Tracker")
+    gr.Markdown("Track your spending easily & stay within budget 📊")
 
----
+    # -------- INPUT SECTION -------- #
+    with gr.Group():
+        gr.Markdown("### ➕ Add Expense")
 
-HERE ARE SOME PICTURES OF THE CODES GUI:-
-<img width="1920" height="1080" alt="Screenshot (12)" src="https://github.com/user-attachments/assets/56e46c5f-d172-4c52-9e4d-1ee46227f92b" />
-<img width="1920" height="1080" alt="Screenshot (13)" src="https://github.com/user-attachments/assets/4fcd7cb5-7529-4ad8-8770-3197f4eea496" />
-<img width="1920" height="1080" alt="Screenshot (14)" src="https://github.com/user-attachments/assets/9540fcb1-088b-4236-a456-2668d8369455" />
-<img width="1920" height="1080" alt="Screenshot (15)" src="https://github.com/user-attachments/assets/a304e94a-ac04-45f8-8607-346baa9149d6" />
-<img width="1920" height="1080" alt="Screenshot (16)" src="https://github.com/user-attachments/assets/22d7630f-0b10-408d-9ea4-b7b0a2e154ba" />
-<img width="1920" height="1080" alt="Screenshot (17)" src="https://github.com/user-attachments/assets/6845a61b-a0e3-4935-b2f4-f5fee4bb25b9" />
-<img width="1920" height="1080" alt="Screenshot (18)" src="https://github.com/user-attachments/assets/dd33b3a0-e5b1-4883-9e48-6e7aa88f5cb8" />
-<img width="1920" height="1080" alt="Screenshot (19)" src="https://github.com/user-attachments/assets/fbe4aad3-ec17-4c86-b89d-717427b7d08a" />
+        with gr.Row():
+            date = gr.Textbox(
+                label="📅 Date (YYYY-MM-DD)",
+                placeholder="2026-03-22",
+                lines=2
+            )
+            cat = gr.Dropdown(categories, label="📂 Category")
+
+        desc = gr.Textbox(label="📝 Description", lines=3)
+        amt = gr.Number(label="💵 Amount", precision=2)
+
+        add_btn = gr.Button("➕ Add Expense")
+
+        output_msg = gr.Textbox(label="Status", lines=3)
+
+    # -------- TABLE -------- #
+    with gr.Group():
+        gr.Markdown("### 📋 Expense History")
+        table = gr.Dataframe(value=expenses)
+
+    # -------- ANALYTICS -------- #
+    with gr.Group():
+        gr.Markdown("### 📊 Insights")
+
+        with gr.Row():
+            total_btn = gr.Button("💰 Total")
+            cat_btn = gr.Button("📊 Category View")
+
+        total_out = gr.Textbox(lines=2)
+        cat_out = gr.Textbox(lines=4)
+
+    # -------- CHART & SUGGESTIONS -------- #
+    with gr.Group():
+        gr.Markdown("### 📈 Visuals & Tips")
+
+        with gr.Row():
+            plot_btn = gr.Button("📈 Show Chart")
+            suggest_btn = gr.Button("💡 Suggestions")
+
+        plot_out = gr.Plot()
+        suggest_out = gr.Textbox(lines=5)
+
+    # -------- ACTIONS -------- #
+    add_btn.click(add_expense, [date, cat, desc, amt], [output_msg, table])
+    total_btn.click(show_total, None, total_out)
+    cat_btn.click(show_category, None, cat_out)
+    plot_btn.click(plot_chart, None, plot_out)
+    suggest_btn.click(suggestions, None, suggest_out)
+
+
+app.launch()
 
 
 
